@@ -1,8 +1,8 @@
 # ChatBot s využitím Wit AI
 
-ChatBot je spolupracuje s API služby Wit AI a vrací odpovědi v následujících případech:
+ChatBot spolupracuje s API služby Wit AI a vrací odpovědi v následujících případech:
 
-- pozdrav
+- odpověď na pozdrav
 - dotaz na cenu známého nebo neznámého produktu
 - nastavení připomínky
 

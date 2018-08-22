@@ -11,7 +11,7 @@ require_once './includes/bootstrap.php';
 
 echo "<html>
 <head>
-<title>Simple interface for manual ChatBot testing</title>
+<title>Simple interface for ChatBot manual testing</title>
 </head>
 <body>
 <h1>Simple interface for manual ChatBot testing</h1>";
