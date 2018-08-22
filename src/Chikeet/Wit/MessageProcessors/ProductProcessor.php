@@ -35,6 +35,11 @@ class ProductProcessor implements IWitMessageProcessor
 		'salad' => 9,
 	];
 	
+	/**
+	 * @var array
+	 */
+	protected $productNames = [];
+	
 	
 	/**
 	 * @param \stdClass $witJsonObject
@@ -64,12 +69,21 @@ class ProductProcessor implements IWitMessageProcessor
 			$confidence = (float) ($item->confidence + $bestPriceConfidence) / 2;
 			$confidenceIndex = ChatBot::getConfidenceIndex($confidence);
 			$productName = $item->value;
+			$this->productNames[] = $productName;
+			
 			if(array_key_exists($productName, self::PRODUCTS_DATA)){
-				$responses[$confidenceIndex] = sprintf(self::MESSENGER_RESPONSE_SUCCESS, $productName, self::PRODUCTS_DATA[$productName]);
+				$responses[$confidenceIndex] = ucfirst(sprintf(self::MESSENGER_RESPONSE_SUCCESS,
+					$productName, self::PRODUCTS_DATA[$productName]));
 			} else {
-				$responses[$confidenceIndex] = sprintf(self::MESSENGER_RESPONSE_ERROR_UNKNOWN_PRODUCT, $productName);
+				$responses[$confidenceIndex] = ucfirst(sprintf(self::MESSENGER_RESPONSE_ERROR_UNKNOWN_PRODUCT, $productName));
 			}
 		}
 		return $responses;
+	}
+	
+	
+	public function getProductNames(): array
+	{
+		return $this->productNames;
 	}
 }

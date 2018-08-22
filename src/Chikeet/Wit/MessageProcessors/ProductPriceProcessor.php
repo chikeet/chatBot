@@ -15,6 +15,8 @@ class ProductPriceProcessor implements IWitMessageProcessor
 {
 	public const WIT_ENTITY_TYPE = 'product_price';
 	
+	private const MESSENGER_RESPONSE_ERROR_UNKNOWN_PRODUCT = 'We do not sell this kind of products. But you can try some vegetables instead.';
+	
 	
 	/**
 	 * @param \stdClass $witJsonObject
@@ -33,13 +35,16 @@ class ProductPriceProcessor implements IWitMessageProcessor
 	 */
 	public function getResponses(\stdClass $witJsonObject): array
 	{
+		$productProcessor = new ProductProcessor;
+		$isUnknownProduct = !$productProcessor->canUnderstand($witJsonObject);
+		
 		$items = $witJsonObject->entities->{self::WIT_ENTITY_TYPE};
 		
 		$responses = [];
 		foreach($items as $item){
 			$confidence = (float) $item->confidence;
 			$confidenceIndex = ChatBot::getConfidenceIndex($confidence);
-			$responses[$confidenceIndex] = $item->value;
+			$responses[$confidenceIndex] = $isUnknownProduct ? self::MESSENGER_RESPONSE_ERROR_UNKNOWN_PRODUCT : $item->value;
 		}
 		return $responses;
 	}

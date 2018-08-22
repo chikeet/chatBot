@@ -18,7 +18,7 @@ class GreetingsProcessor implements IWitMessageProcessor
 	/**
 	 * Possible Messenger responses.
 	 */
-	private const MESSENGER_RESPONSE_SUCCESS = 'Hello';
+	private const MESSENGER_RESPONSE_SUCCESS = 'Hello!';
 	
 	
 	/**
